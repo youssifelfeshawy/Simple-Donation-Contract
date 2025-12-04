@@ -1,7 +1,0 @@
-{
-  "name": "my-truffle-project",
-  "version": "1.0.0",
-  "devDependencies": {
-    "@openzeppelin/test-helpers": "^0.5.16"
-  }
-}
