@@ -1,28 +1,24 @@
-# Use official Node image
-FROM node:18
+# Use lightweight Node.js Alpine image
+FROM node:20-alpine
 
-# Create app directory
-WORKDIR /usr/src/app
+# Set working directory
+WORKDIR /app
 
-# Copy project source
+# Copy all project files
 COPY . .
 
-# Install global tools
-# - truffle: to compile & migrate
-# - http-server: to serve the frontend
-# - ganache: local blockchain node
-RUN npm install -g truffle http-server ganache
+# Install dependencies: jq (for JSON parsing), truffle (for compilation/migration), http-server (for serving HTML/JS)
+RUN apk add --no-cache jq
+RUN npm install -g truffle http-server
 
-# Install project dependencies
-RUN npm install
-
-# Expose Ganache and frontend ports
-EXPOSE 7545 8080
-
-# Copy entrypoint script
-COPY docker-entrypoint.sh .
-
-RUN chmod +x docker-entrypoint.sh
-
-# Run the entrypoint
-CMD ["./docker-entrypoint.sh"]
+# The CMD runs at container start:
+# 1. Compile contracts (truffle compile)
+# 2. Migrate/deploy to Ganache (truffle migrate)
+# 3. Extract deployed address from artifact
+# 4. Replace hardcoded address in app.js
+# 5. Serve the files on port 8080
+CMD truffle compile && \
+    truffle migrate --network development && \
+    ADDRESS=$(jq -r '.networks."5777".address' build/contracts/DonationContract.json) && \
+    sed -i "s/const contractAddress = .*/const contractAddress = '$ADDRESS';/" app.js && \
+    http-server . -p 8080 --cors
