@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Donation dApp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        #status {
+            color: red;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Donation Smart Contract GUI</h1>
+        <p>This dApp connects to your local Ganache blockchain.</p>
+
+        <div class="card">
+            <p class="label">Active Donor Account:</p>
+            <p><span id="activeAccount">Not loaded</span></p>
+        </div>
+
+        <div class="card">
+            <p class="label">Total Donations:</p>
+            <h2><span id="totalDonations">0 ETH</span></h2>
+
+            <p class="label">Your Donations (accounts[1]):</p>
+            <p><span id="userDonations">0 ETH</span></p>
+
+            <button onclick="getTotal()">Refresh Total</button>
+            <button onclick="getUserDonation()">Refresh My Donations</button>
+        </div>
+
+        <div class="card">
+            <p class="label">Make a Donation</p>
+            <input type="text" id="donationAmount" placeholder="Enter amount in ETH (e.g., 1)">
+            <button onclick="donate()">Donate</button>
+        </div>
+
+        <div class="card">
+            <p class="label">Owner Controls</p>
+            <button onclick="withdraw()">Withdraw (Owner Only)</button>
+        </div>
+
+        <div class="card">
+            <p id="status"></p>
+            <p class="label">Last Transaction Hash:</p>
+            <p><span id="txHash">N/A</span></p>
+        </div>
+    </div>
+
+    <!-- EASIEST: use Web3.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+
+    <!-- Your app logic -->
+    <script src="app.js"></script>
+</body>
+
+</html>
