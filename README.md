@@ -1,7 +1,6 @@
 # Simple Donation Contract on Ganache
 
-![Project Banner](https://via.placeholder.com/1200x300?text=Simple+Donation+Contract)  
-*(Replace with an actual banner image if available)*
+![Project GUI](https://github.com/youssifelfeshawy/Simple-Donation-Contract/blob/main/gui.png)  
 
 ## Project Overview
 
